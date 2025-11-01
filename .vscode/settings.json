@@ -1,0 +1,10 @@
+{
+  "files.autoSave": "off", // nonaktifkan auto save supaya hanya menyimpan dengan Ctrl+S
+  "editor.formatOnSave": true, // biar langsung rapi saat save
+  "[dart]": {
+    "editor.formatOnSave": true
+  },
+  "dart.previewFlutterUiGuides": true,
+  "dart.previewFlutterUiGuidesCustomTracking": true
+}
+
