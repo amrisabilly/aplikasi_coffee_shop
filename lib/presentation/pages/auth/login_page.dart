@@ -294,56 +294,56 @@ class _LoginPageState extends State<LoginPage> {
                             SizedBox(height: 20),
 
                             // Tombol Google Login
-                            SizedBox(
-                              width: double.infinity,
-                              height: 50,
-                              child: OutlinedButton(
-                                style: OutlinedButton.styleFrom(
-                                  side: BorderSide(
-                                    color: Colors.grey.shade300,
-                                    width: 1.5,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  // Handle Google login
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: 20,
-                                      height: 20,
-                                      decoration: BoxDecoration(
-                                        color: Colors.red,
-                                        borderRadius: BorderRadius.circular(2),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "G",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 12),
-                                    Text(
-                                      "Masuk dengan Google",
-                                      style: GoogleFonts.sora(
-                                        color: Colors.grey.shade700,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // SizedBox(
+                            //   width: double.infinity,
+                            //   height: 50,
+                            //   child: OutlinedButton(
+                            //     style: OutlinedButton.styleFrom(
+                            //       side: BorderSide(
+                            //         color: Colors.grey.shade300,
+                            //         width: 1.5,
+                            //       ),
+                            //       shape: RoundedRectangleBorder(
+                            //         borderRadius: BorderRadius.circular(12),
+                            //       ),
+                            //     ),
+                            //     onPressed: () {
+                            //       // Handle Google login
+                            //     },
+                            //     child: Row(
+                            //       mainAxisAlignment: MainAxisAlignment.center,
+                            //       children: [
+                            //         Container(
+                            //           width: 20,
+                            //           height: 20,
+                            //           decoration: BoxDecoration(
+                            //             color: Colors.red,
+                            //             borderRadius: BorderRadius.circular(2),
+                            //           ),
+                            //           child: Center(
+                            //             child: Text(
+                            //               "G",
+                            //               style: TextStyle(
+                            //                 color: Colors.white,
+                            //                 fontSize: 12,
+                            //                 fontWeight: FontWeight.bold,
+                            //               ),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //         SizedBox(width: 12),
+                            //         Text(
+                            //           "Masuk dengan Google",
+                            //           style: GoogleFonts.sora(
+                            //             color: Colors.grey.shade700,
+                            //             fontSize: 14,
+                            //             fontWeight: FontWeight.w500,
+                            //           ),
+                            //         ),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       )
