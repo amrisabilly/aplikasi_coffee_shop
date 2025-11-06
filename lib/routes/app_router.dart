@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 // Pages
-import 'package:project_satu/presentation/pages/anggaran/anggaran_page.dart';
-import 'package:project_satu/presentation/pages/detail/detail_page.dart';
-import 'package:project_satu/presentation/pages/developer/developer_page.dart';
-import 'package:project_satu/presentation/pages/explore/explore_page.dart';
-import 'package:project_satu/presentation/pages/game/game_page.dart';
-import 'package:project_satu/presentation/pages/janjian/janjian_page.dart';
-import 'package:project_satu/presentation/pages/menu/menu_page.dart';
-import 'package:project_satu/presentation/pages/riwayat_pesanan/riwayat_page.dart';
-import 'package:project_satu/presentation/pages/riwayat_pesanan/struk_page.dart';
+import 'package:project_satu/presentation/pages/main/home/anggaran/anggaran_page.dart';
+import 'package:project_satu/presentation/pages/main/menu/detail/detail_page.dart';
+import 'package:project_satu/presentation/pages/main/profile/developer/developer_page.dart';
+import 'package:project_satu/presentation/pages/main/home/explore/explore_page.dart';
+import 'package:project_satu/presentation/pages/main/profile/game/game_page.dart';
+import 'package:project_satu/presentation/pages/main/home/janjian/janjian_page.dart';
+import 'package:project_satu/presentation/pages/main/menu/menu_page.dart';
+import 'package:project_satu/presentation/pages/main/profile/riwayat_pesanan/riwayat_page.dart';
+import 'package:project_satu/presentation/pages/main/profile/riwayat_pesanan/struk_page.dart';
 import '../presentation/auth/login_page.dart';
 import '../presentation/auth/register_page.dart';
-import '../presentation/pages/home/home_page.dart';
-import '../presentation/pages/order/order_page.dart';
-import '../presentation/pages/profile/profile_page.dart';
-import '../presentation/widgets/navbar_widget.dart';
-import '../presentation/pages/landing/landing_page.dart';
+import '../presentation/pages/main/home/home_page.dart';
+import '../presentation/pages/main/order/order_page.dart';
+import '../presentation/pages/main/profile/profile_page.dart';
+import '../presentation/pages/widgets/navbar_widget.dart';
+import '../presentation/splash/landing_page.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/landing',

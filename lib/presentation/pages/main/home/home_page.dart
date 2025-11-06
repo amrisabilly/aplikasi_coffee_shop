@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 // Import controller
-import '../../../controllers/home-controller.dart';
-import '../../../models/kategori-model.dart';
-import '../../../models/product-model.dart';
+import '../../../../controllers/home-controller.dart';
+import '../../../../models/kategori-model.dart';
+import '../../../../models/product-model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

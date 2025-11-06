@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:awesome_notifications/awesome_notifications.dart';
-import '../../../controllers/detail_controller.dart';
+import '../../../../controllers/detail_controller.dart';
 
 class OrderPage extends StatefulWidget {
   const OrderPage({super.key});

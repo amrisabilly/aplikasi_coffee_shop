@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:project_satu/presentation/pages/game/game_page.dart';
+import 'package:project_satu/presentation/pages/main/profile/game/game_page.dart';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:project_satu/controllers/profile_controller.dart';
-import 'package:project_satu/presentation/pages/riwayat_pesanan/riwayat_page.dart';
+import 'package:project_satu/presentation/pages/main/profile/riwayat_pesanan/riwayat_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

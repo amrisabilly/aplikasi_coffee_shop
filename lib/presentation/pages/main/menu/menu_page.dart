@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 
 // Import controller
 import 'package:project_satu/controllers/menu__list_controller.dart';
-import '../../../models/product-model.dart';
-import '../../../models/kategori-model.dart';
+import '../../../../models/product-model.dart';
+import '../../../../models/kategori-model.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});

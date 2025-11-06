@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
-import '../../../controllers/order_history_controller.dart';
+import '../../../../../controllers/order_history_controller.dart';
+import 'package:go_router/go_router.dart';
 
 class StrukPage extends StatefulWidget {
   final int orderId;
@@ -83,7 +85,7 @@ class _StrukPageState extends State<StrukPage> {
         backgroundColor: Color(0xFFC67C4E),
         elevation: 0,
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.go('/profile'),
           icon: Icon(Icons.arrow_back, color: Colors.white),
         ),
         title: Text(

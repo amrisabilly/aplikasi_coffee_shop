@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
-import '../../../controllers/order_history_controller.dart';
+import '../../../../../controllers/order_history_controller.dart';
 import 'struk_page.dart';
 
 class RiwayatPage extends StatefulWidget {

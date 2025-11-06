@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../models/detail-model.dart';
-import '../../../controllers/detail_controller.dart';
+import '../../../../../models/detail-model.dart';
+import '../../../../../controllers/detail_controller.dart';
 
 class DetailPage extends StatefulWidget {
   final String productId;
