@@ -4,9 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 // Model dan fetch data Registrasi
-import '../../../fetch_data/user/registrasi.dart';
-import '../../../models/user/registrasi-model.dart';
-import '../../../controllers/registrasi_controller.dart';
+import '../../controllers/auth/registrasi_controller.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -22,7 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool isPasswordVisible = false;
   bool isAgreed = false;
 
-  final registrasiController = RegistrasiController(); // Tambahkan ini
+  final registrasiController = RegistrasiController();
 
   @override
   Widget build(BuildContext context) {
@@ -246,7 +244,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
                             SizedBox(height: 24),
 
-                            // D. Persetujuan & Kebijakan
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -299,7 +296,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                             SizedBox(height: 30),
 
-                            // E. Tombol Daftar Utama
+                            // Tombol Daftar Utama
                             SizedBox(
                               width: double.infinity,
                               height: 50,
@@ -388,58 +385,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
 
                             SizedBox(height: 20),
-
-                            // Tombol Google Register
-                            // SizedBox(
-                            //   width: double.infinity,
-                            //   height: 50,
-                            //   child: OutlinedButton(
-                            //     style: OutlinedButton.styleFrom(
-                            //       side: BorderSide(
-                            //         color: Colors.grey.shade300,
-                            //         width: 1.5,
-                            //       ),
-                            //       shape: RoundedRectangleBorder(
-                            //         borderRadius: BorderRadius.circular(12),
-                            //       ),
-                            //     ),
-                            //     onPressed: () {
-                            //       // Handle Google registration
-                            //     },
-                            //     child: Row(
-                            //       mainAxisAlignment: MainAxisAlignment.center,
-                            //       children: [
-                            //         Container(
-                            //           width: 20,
-                            //           height: 20,
-                            //           decoration: BoxDecoration(
-                            //             color: Colors.red,
-                            //             borderRadius: BorderRadius.circular(2),
-                            //           ),
-                            //           child: Center(
-                            //             child: Text(
-                            //               "G",
-                            //               style: TextStyle(
-                            //                 color: Colors.white,
-                            //                 fontSize: 12,
-                            //                 fontWeight: FontWeight.bold,
-                            //               ),
-                            //             ),
-                            //           ),
-                            //         ),
-                            //         SizedBox(width: 12),
-                            //         Text(
-                            //           "Lanjutkan dengan Google",
-                            //           style: GoogleFonts.sora(
-                            //             color: Colors.grey.shade700,
-                            //             fontSize: 14,
-                            //             fontWeight: FontWeight.w500,
-                            //           ),
-                            //         ),
-                            //       ],
-                            //     ),
-                            //   ),
-                            // ),
                           ],
                         ),
                       )
@@ -477,7 +422,6 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ],
                   ).animate().fadeIn(delay: 900.ms, duration: 500.ms),
-
                   SizedBox(height: 30),
                 ],
               ),

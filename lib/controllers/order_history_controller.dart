@@ -21,12 +21,13 @@ class OrderHistoryController {
       if (token.isEmpty || userId == 0) return [];
 
       final uri = Uri.parse(
-        'https://monitoringweb.decoratics.id/api/coffe/orders/user/$userId',
+        'https://monitoringweb.decoratics.id/api/coffe/orders?user_id=$userId',
       );
       final response = await http.get(
         uri,
         headers: {'Authorization': 'Bearer $token'},
       );
+      print('Order history response: ${response.body}');
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -54,6 +55,7 @@ class OrderHistoryController {
         uri,
         headers: {'Authorization': 'Bearer $token'},
       );
+      print('Order detail response: ${response.body}');
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);

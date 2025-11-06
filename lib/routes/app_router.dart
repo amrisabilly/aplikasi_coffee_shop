@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+// Pages
 import 'package:project_satu/presentation/pages/anggaran/anggaran_page.dart';
 import 'package:project_satu/presentation/pages/detail/detail_page.dart';
 import 'package:project_satu/presentation/pages/developer/developer_page.dart';
@@ -9,9 +11,8 @@ import 'package:project_satu/presentation/pages/janjian/janjian_page.dart';
 import 'package:project_satu/presentation/pages/menu/menu_page.dart';
 import 'package:project_satu/presentation/pages/riwayat_pesanan/riwayat_page.dart';
 import 'package:project_satu/presentation/pages/riwayat_pesanan/struk_page.dart';
-
-import '../presentation/pages/auth/login_page.dart';
-import '../presentation/pages/auth/register_page.dart';
+import '../presentation/auth/login_page.dart';
+import '../presentation/auth/register_page.dart';
 import '../presentation/pages/home/home_page.dart';
 import '../presentation/pages/order/order_page.dart';
 import '../presentation/pages/profile/profile_page.dart';
@@ -21,6 +22,7 @@ import '../presentation/pages/landing/landing_page.dart';
 final GoRouter router = GoRouter(
   initialLocation: '/landing',
   routes: [
+    // ShellRoute untuk halaman utama dengan Navbar
     ShellRoute(
       builder: (context, state, child) {
         int index = 0;
@@ -59,13 +61,20 @@ final GoRouter router = GoRouter(
         ),
       ],
     ),
+
+    // Auth & Landing
     GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
     GoRoute(
       path: '/register',
       builder: (context, state) => const RegisterPage(),
     ),
     GoRoute(path: '/landing', builder: (context, state) => const LandingPage()),
+
+    // Game & Developer
     GoRoute(path: '/game', builder: (context, state) => const GamiFikasi()),
+    GoRoute(path: '/developer', builder: (context, state) => DeveloperPage()),
+
+    // Detail produk (dengan parameter dan query)
     GoRoute(
       path: '/detail/:productId',
       builder: (context, state) {
@@ -74,12 +83,9 @@ final GoRouter router = GoRouter(
         return DetailPage(productId: productId, from: from);
       },
     ),
-    GoRoute(path: '/developer', builder: (context, state) => DeveloperPage()),
 
-    // Route untuk riwayat pesanan
+    // Riwayat pesanan & struk
     GoRoute(path: '/riwayat', builder: (context, state) => const RiwayatPage()),
-
-    // Route untuk struk dengan parameter orderId
     GoRoute(
       path: '/struk/:orderId',
       builder: (context, state) {

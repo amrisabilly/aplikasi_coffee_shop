@@ -69,11 +69,13 @@ class _StrukPageState extends State<StrukPage> {
     final orderDate = DateTime.parse(orderDetail!['created_at']);
     final items = orderDetail!['items'] as List<dynamic>? ?? [];
     final subtotal = items.fold<double>(0, (sum, item) {
-      return sum + (item['qty'] * item['price']);
+      return sum +
+          (item['qty'] * double.tryParse(item['price'].toString()) ?? 0.0);
     });
-    final discount = orderDetail!['discount'] ?? 0;
+    final discount =
+        double.tryParse(orderDetail!['discount'].toString()) ?? 0.0;
     final discountAmount = subtotal * discount / 100;
-    final total = orderDetail!['total'];
+    final total = double.tryParse(orderDetail!['total'].toString()) ?? 0.0;
 
     return Scaffold(
       backgroundColor: Color(0xFFF9F9F9),
@@ -197,7 +199,9 @@ class _StrukPageState extends State<StrukPage> {
                 SizedBox(height: 12),
 
                 ...items.map((item) {
-                  final itemTotal = item['qty'] * item['price'];
+                  final price =
+                      double.tryParse(item['price'].toString()) ?? 0.0;
+                  final itemTotal = item['qty'] * price;
                   return Padding(
                     padding: EdgeInsets.only(bottom: 12),
                     child: Row(

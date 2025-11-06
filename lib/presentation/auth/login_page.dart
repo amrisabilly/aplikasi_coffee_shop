@@ -4,8 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../models/user/login-model.dart';
-import '../../../controllers/login_controller.dart';
+import '../../controllers/auth/login_controller.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,29 +19,39 @@ class _LoginPageState extends State<LoginPage> {
   bool isPasswordVisible = false;
   final userController = UserController();
 
-  Future<void> _login() async {
+  Future<void> _handleLogin() async {
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
+
+    if (email.isEmpty || password.isEmpty) {
+      _showError('Email dan password wajib diisi!');
+      return;
+    }
+
     try {
-      final response = await userController.loginUser(
-        emailController.text.trim(),
-        passwordController.text.trim(),
-      );
+      final response = await userController.loginUser(email, password);
 
       if (response.token != null) {
         await userController.saveUserData(response.user ?? {}, response.token!);
         if (!mounted) return;
         context.go('/home');
       } else {
-        if (!mounted) return;
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Login gagal!')));
+        _showError(
+          response.message.isNotEmpty
+              ? response.message
+              : 'Email atau password salah!',
+        );
       }
     } catch (e) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Login gagal: $e')));
+      _showError('Login gagal: Email atau password salah!');
     }
+  }
+
+  void _showError(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -50,41 +59,38 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Stack(
         children: [
+          // Background
           Container(
             width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(
-              image: DecorationImage(
+              image: const DecorationImage(
                 image: AssetImage("assets/images/bg.png"),
                 fit: BoxFit.cover,
               ),
             ),
             child: Container(
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(
-                  0.6,
-                ), // Overlay transparan gelap
-              ),
+              decoration: BoxDecoration(color: Colors.black.withOpacity(0.6)),
             ),
           ),
-
+          // Content
           SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
                 children: [
-                  SizedBox(height: 40),
-
+                  const SizedBox(height: 40),
+                  // Logo & Welcome
                   Column(
                     children: [
                       Container(
                             width: 80,
                             height: 80,
                             decoration: BoxDecoration(
-                              color: Color(0xFFC67C4E),
+                              color: const Color(0xFFC67C4E),
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            child: Icon(
+                            child: const Icon(
                               Icons.coffee,
                               size: 40,
                               color: Colors.white,
@@ -93,9 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                           .animate()
                           .scale(delay: 200.ms, duration: 600.ms)
                           .fadeIn(),
-
-                      SizedBox(height: 30),
-
+                      const SizedBox(height: 30),
                       Text(
                             "Selamat Datang Kembali",
                             style: GoogleFonts.sora(
@@ -107,9 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                           .animate()
                           .fadeIn(delay: 400.ms, duration: 600.ms)
                           .slideY(begin: 0.3, end: 0),
-
-                      SizedBox(height: 8),
-
+                      const SizedBox(height: 8),
                       Text(
                             "Lanjutkan petualangan kopimu",
                             style: GoogleFonts.sora(
@@ -122,11 +124,10 @@ class _LoginPageState extends State<LoginPage> {
                           .slideY(begin: 0.3, end: 0),
                     ],
                   ),
-
-                  SizedBox(height: 50),
-
+                  const SizedBox(height: 50),
+                  // Form Login
                   Container(
-                        padding: EdgeInsets.all(24),
+                        padding: const EdgeInsets.all(24),
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.95),
                           borderRadius: BorderRadius.circular(20),
@@ -134,13 +135,13 @@ class _LoginPageState extends State<LoginPage> {
                             BoxShadow(
                               color: Colors.black.withOpacity(0.1),
                               blurRadius: 20,
-                              offset: Offset(0, 10),
+                              offset: const Offset(0, 10),
                             ),
                           ],
                         ),
                         child: Column(
                           children: [
-                            // Input Email
+                            // Email
                             TextField(
                               controller: emailController,
                               decoration: InputDecoration(
@@ -152,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                                 hintStyle: GoogleFonts.sora(
                                   color: Colors.grey.shade400,
                                 ),
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   Icons.email_outlined,
                                   color: Color(0xFFC67C4E),
                                 ),
@@ -164,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0xFFC67C4E),
                                     width: 2,
                                   ),
@@ -173,10 +174,8 @@ class _LoginPageState extends State<LoginPage> {
                                 fillColor: Colors.grey.shade50,
                               ),
                             ),
-
-                            SizedBox(height: 20),
-
-                            // Input Password
+                            const SizedBox(height: 20),
+                            // Password
                             TextField(
                               controller: passwordController,
                               obscureText: !isPasswordVisible,
@@ -189,7 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                                 hintStyle: GoogleFonts.sora(
                                   color: Colors.grey.shade400,
                                 ),
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   Icons.lock_outline,
                                   color: Color(0xFFC67C4E),
                                 ),
@@ -214,7 +213,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Color(0xFFC67C4E),
                                     width: 2,
                                   ),
@@ -223,38 +222,20 @@ class _LoginPageState extends State<LoginPage> {
                                 fillColor: Colors.grey.shade50,
                               ),
                             ),
-
-                            SizedBox(height: 30),
-
-                            // D. Tombol Login Utama
+                            const SizedBox(height: 30),
+                            // Tombol Login
                             SizedBox(
                               width: double.infinity,
                               height: 50,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFFC67C4E),
+                                  backgroundColor: const Color(0xFFC67C4E),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   elevation: 3,
                                 ),
-                                onPressed: () async {
-                                  final email = emailController.text.trim();
-                                  final password =
-                                      passwordController.text.trim();
-
-                                  if (email.isEmpty || password.isEmpty) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          'Email dan password wajib diisi!',
-                                        ),
-                                      ),
-                                    );
-                                    return;
-                                  }
-                                  await _login(); // <-- Panggil fungsi _login yang sudah benar
-                                },
+                                onPressed: _handleLogin,
                                 child: Text(
                                   "Masuk",
                                   style: GoogleFonts.sora(
@@ -265,9 +246,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                             ),
-
-                            SizedBox(height: 20),
-
+                            const SizedBox(height: 20),
                             // Divider "ATAU"
                             Row(
                               children: [
@@ -275,7 +254,9 @@ class _LoginPageState extends State<LoginPage> {
                                   child: Divider(color: Colors.grey.shade400),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 16),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                  ),
                                   child: Text(
                                     "ATAU",
                                     style: GoogleFonts.sora(
@@ -290,70 +271,17 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ],
                             ),
-
-                            SizedBox(height: 20),
-
-                            // Tombol Google Login
-                            // SizedBox(
-                            //   width: double.infinity,
-                            //   height: 50,
-                            //   child: OutlinedButton(
-                            //     style: OutlinedButton.styleFrom(
-                            //       side: BorderSide(
-                            //         color: Colors.grey.shade300,
-                            //         width: 1.5,
-                            //       ),
-                            //       shape: RoundedRectangleBorder(
-                            //         borderRadius: BorderRadius.circular(12),
-                            //       ),
-                            //     ),
-                            //     onPressed: () {
-                            //       // Handle Google login
-                            //     },
-                            //     child: Row(
-                            //       mainAxisAlignment: MainAxisAlignment.center,
-                            //       children: [
-                            //         Container(
-                            //           width: 20,
-                            //           height: 20,
-                            //           decoration: BoxDecoration(
-                            //             color: Colors.red,
-                            //             borderRadius: BorderRadius.circular(2),
-                            //           ),
-                            //           child: Center(
-                            //             child: Text(
-                            //               "G",
-                            //               style: TextStyle(
-                            //                 color: Colors.white,
-                            //                 fontSize: 12,
-                            //                 fontWeight: FontWeight.bold,
-                            //               ),
-                            //             ),
-                            //           ),
-                            //         ),
-                            //         SizedBox(width: 12),
-                            //         Text(
-                            //           "Masuk dengan Google",
-                            //           style: GoogleFonts.sora(
-                            //             color: Colors.grey.shade700,
-                            //             fontSize: 14,
-                            //             fontWeight: FontWeight.w500,
-                            //           ),
-                            //         ),
-                            //       ],
-                            //     ),
-                            //   ),
-                            // ),
+                            const SizedBox(height: 20),
+                            // Tombol Google Login (opsional, nonaktif)
+                            // ...
                           ],
                         ),
                       )
                       .animate()
                       .fadeIn(delay: 800.ms, duration: 600.ms)
                       .slideY(begin: 0.3, end: 0),
-
-                  SizedBox(height: 30),
-
-                  // E. Ajakan untuk Daftar
+                  const SizedBox(height: 30),
+                  // Ajakan daftar
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -371,18 +299,17 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text(
                           "Daftar di sini",
                           style: GoogleFonts.sora(
-                            color: Color(0xFFC67C4E),
+                            color: const Color(0xFFC67C4E),
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             decoration: TextDecoration.underline,
-                            decorationColor: Color(0xFFC67C4E),
+                            decorationColor: const Color(0xFFC67C4E),
                           ),
                         ),
                       ),
                     ],
                   ).animate().fadeIn(delay: 1000.ms, duration: 500.ms),
-
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                 ],
               ),
             ),

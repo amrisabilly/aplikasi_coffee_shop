@@ -2,8 +2,9 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+/// Controller untuk autentikasi user
 class UserController {
-  // Fungsi login
+  /// Login user ke backend, return LoginResponse
   Future<LoginResponse> loginUser(String email, String password) async {
     final response = await http.post(
       Uri.parse('https://monitoringweb.decoratics.id/api/auth/login'),
@@ -15,11 +16,24 @@ class UserController {
       final jsonResponse = json.decode(response.body);
       return LoginResponse.fromJson(jsonResponse);
     } else {
-      throw Exception('Login gagal: ${response.body}');
+      try {
+        final jsonResponse = json.decode(response.body);
+        return LoginResponse(
+          message: jsonResponse['message'] ?? 'Email atau password salah!',
+          user: null,
+          token: null,
+        );
+      } catch (_) {
+        return LoginResponse(
+          message: 'Email atau password salah!',
+          user: null,
+          token: null,
+        );
+      }
     }
   }
 
-  // Simpan data user ke SharedPreferences
+  /// SharedPreferences
   Future<void> saveUserData(Map<String, dynamic> user, String token) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('user_name', user['full_name'] ?? '');
@@ -50,7 +64,7 @@ class UserController {
   }
 }
 
-// Model response login sederhana
+// Model login
 class LoginResponse {
   final String message;
   final Map<String, dynamic>? user;
