@@ -87,7 +87,7 @@ class _AnggaranPageState extends State<AnggaranPage> {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black87),
-          onPressed: () => context.pop(),
+          onPressed: () => context.go("/explore"),
         ),
         title: Text(
           "Coffee Budget Recommendation",

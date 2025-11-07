@@ -118,24 +118,6 @@ class LandingPage extends StatelessWidget {
                       .slideY(begin: 0.5, end: 0),
 
                   SizedBox(height: 16),
-
-                  // Lanjut Sebagai Tamu (Text Button)
-                  TextButton(
-                        onPressed: () => context.go('/home'),
-                        child: Text(
-                          "Lanjut Sebagai Tamu",
-                          style: GoogleFonts.sora(
-                            color: Colors.white.withOpacity(0.8),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            decoration: TextDecoration.underline,
-                            decorationColor: Colors.white.withOpacity(0.8),
-                          ),
-                        ),
-                      )
-                      .animate()
-                      .fadeIn(delay: 1000.ms, duration: 500.ms)
-                      .slideY(begin: 0.3, end: 0),
                 ],
               ),
             ),

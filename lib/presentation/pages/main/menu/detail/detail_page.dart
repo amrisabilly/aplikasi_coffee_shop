@@ -6,7 +6,7 @@ import '../../../../../controllers/detail_controller.dart';
 
 class DetailPage extends StatefulWidget {
   final String productId;
-  final String from; // Tambahkan parameter ini
+  final String from;
 
   const DetailPage({super.key, required this.productId, required this.from});
 
@@ -18,11 +18,8 @@ class _DetailPageState extends State<DetailPage> {
   final DetailController detailController = DetailController();
 
   late Future<ProductDetail> productDetailFuture;
-  String selectedSize = 'M';
-  String selectedTemperature = 'hot'; // 'hot', 'ice', 'warm'
-  bool isFavorite = false;
-  double userRating = 0.0; // Rating yang dipilih user
-  bool hasRated = false; // Apakah user sudah rating
+  String selectedSize = '';
+  String selectedTemperature = '';
 
   @override
   void initState() {
@@ -32,11 +29,10 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
-  // Saat order
   void _onOrder(ProductDetail product) async {
     await detailController.addToCart(
       product,
-      1, // qty, bisa tambahkan input qty jika mau
+      1,
       selectedSize,
       selectedTemperature,
       product.price.toString(),
@@ -48,12 +44,6 @@ class _DetailPageState extends State<DetailPage> {
         backgroundColor: Color(0xFFC67C4E),
       ),
     );
-  }
-
-  // Saat submit rating
-  void _submitRating(double rating) async {
-    await detailController.submitRating(int.parse(widget.productId), rating);
-    // ...lanjutkan feedback UI...
   }
 
   @override
@@ -85,32 +75,6 @@ class _DetailPageState extends State<DetailPage> {
             },
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 30, top: 20),
-            child: IconButton(
-              icon: Icon(
-                isFavorite ? Icons.favorite : Icons.favorite_outline_outlined,
-                color: isFavorite ? Colors.red : Colors.black,
-              ),
-              onPressed: () {
-                setState(() {
-                  isFavorite = !isFavorite;
-                });
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      isFavorite
-                          ? 'Ditambahkan ke favorit'
-                          : 'Dihapus dari favorit',
-                    ),
-                    backgroundColor: Color(0xFFC67C4E),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
       ),
       body: FutureBuilder<ProductDetail>(
         future: productDetailFuture,
@@ -320,68 +284,8 @@ class _DetailPageState extends State<DetailPage> {
                               ),
 
                               SizedBox(height: 18),
-                              // Rating & Rating Button
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                    size: 20,
-                                  ),
-                                  SizedBox(width: 3),
-                                  Text(
-                                    product.rating.toString(),
-                                    style: GoogleFonts.sora(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  SizedBox(width: 3),
-                                  Text(
-                                    "(${product.reviewCount})",
-                                    style: GoogleFonts.sora(
-                                      color: Colors.blueGrey,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  // Tombol Rating
-                                  ElevatedButton.icon(
-                                    onPressed: () => _showRatingDialog(context),
-                                    icon: Icon(
-                                      hasRated ? Icons.star : Icons.star_border,
-                                      size: 16,
-                                      color:
-                                          hasRated
-                                              ? Colors.amber
-                                              : Colors.white,
-                                    ),
-                                    label: Text(
-                                      hasRated ? 'Rated' : 'Rate',
-                                      style: GoogleFonts.sora(
-                                        fontSize: 12,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          hasRated
-                                              ? Colors.green
-                                              : Color(0xFFC67C4E),
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 12,
-                                        vertical: 6,
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              SizedBox(height: 8),
+                              // (Rating & Rating Button dihapus)
+                              // SizedBox(height: 8),
                               Divider(
                                 color: Color(0xFFE3E3E3),
                                 thickness: 1,
@@ -539,115 +443,4 @@ class _DetailPageState extends State<DetailPage> {
       ),
     );
   }
-
-  void _showRatingDialog(BuildContext context) {
-    double tempRating = userRating;
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (context, setDialogState) {
-            return AlertDialog(
-              title: Text(
-                'Berikan Rating',
-                style: GoogleFonts.sora(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Bagaimana pendapat Anda tentang produk ini?',
-                    style: GoogleFonts.sora(fontSize: 14),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 20),
-                  // Rating Stars
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: List.generate(5, (index) {
-                      return GestureDetector(
-                        onTap: () {
-                          setDialogState(() {
-                            tempRating = index + 1.0;
-                          });
-                        },
-                        child: Icon(
-                          index < tempRating ? Icons.star : Icons.star_border,
-                          color: Colors.amber,
-                          size: 32,
-                        ),
-                      );
-                    }),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    tempRating > 0 ? '${tempRating.toInt()}/5' : 'Pilih rating',
-                    style: GoogleFonts.sora(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFFC67C4E),
-                    ),
-                  ),
-                ],
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(
-                    'Batal',
-                    style: GoogleFonts.sora(color: Colors.grey),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed:
-                      tempRating > 0
-                          ? () {
-                            setState(() {
-                              userRating = tempRating;
-                              hasRated = true;
-                            });
-                            Navigator.pop(context);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  'Terima kasih! Rating ${tempRating.toInt()}/5 berhasil diberikan.',
-                                ),
-                                backgroundColor: Color(0xFFC67C4E),
-                              ),
-                            );
-                            // TODO: Kirim rating ke backend/API
-                            // _submitRating(tempRating);
-                          }
-                          : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFC67C4E),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: Text(
-                    'Kirim Rating',
-                    style: GoogleFonts.sora(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
-        );
-      },
-    );
-  }
 }
-
-// void _submitRating(double rating) {
-//   // TODO: Kirim rating ke API backend
-//   print('Rating ${rating} untuk produk ${widget.productId} berhasil dikirim');
-//   // Contoh: await ratingController.submitRating(widget.productId, rating);
-// }
